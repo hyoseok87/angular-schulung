@@ -1,0 +1,55 @@
+<div class="blog-formular">
+  <h2>
+    {{ editEntry ? (editEntry.titel + ' bearbeiten') : 'Neuen Eintrag erstellen' }}
+  </h2>
+
+  <form (ngSubmit)="onSubmit()">
+
+    <div>
+      <label for="titel">Titel<span class="required">*</span></label><br />
+      <input
+        type="text"
+        id="titel"
+        name="titel"
+        [(ngModel)]="titel"
+        [ngClass]="{ 'input-error': titelLeerFehler || titelDoppeltFehler }"
+        placeholder="Titel"
+      />
+      <div *ngIf="titelLeerFehler" class="fehlermeldung">
+        Bitte geben Sie einen Titel ein.
+      </div>
+      <div *ngIf="titelDoppeltFehler" class="fehlermeldung">
+        Ein Eintrag mit diesem Titel existiert bereits.
+      </div>
+    </div>
+
+    <div>
+      <label for="bildUrl">Bild-URL<span class="required">*</span></label><br />
+      <input
+        type="text"
+        id="bildUrl"
+        name="bildUrl"
+        [(ngModel)]="image"
+        [ngClass]="{ 'input-error': imageFehler }"
+        placeholder="URL"
+      />
+      <div *ngIf="imageFehler" class="fehlermeldung">
+        Bild-URL ist erforderlich.
+      </div>
+      <div *ngIf="imageAdresseUngueltig" class="fehlermeldung">
+        Bitte geben Sie eine gültige Webadresse ein (z.B. https://beispiel.de).
+      </div>
+    </div>
+
+    <div>
+      <label for="text">Text:</label><br />
+      <textarea id="text" name="text" rows="4" [(ngModel)]="text"></textarea>
+    </div>
+    
+    <button type="submit" [ngClass]="{ 'btn-update': editEntry, 'btn-save': !editEntry }">
+      {{ editEntry ? 'Eintrag aktualisieren' : 'Eintrag erstellen' }}
+    </button>
+
+    <p>(<span class="required">*</span> Felder sind verpflicht)</p>
+  </form>
+</div>

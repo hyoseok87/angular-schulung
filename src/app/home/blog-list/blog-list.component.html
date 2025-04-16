@@ -1,0 +1,36 @@
+<div class="blog-liste">
+  <h2>Blog-List</h2>
+
+  <label for="entrySelect">Blog-Eintrag auswählen:</label>
+  <select id="entrySelect" [(ngModel)]="selectedIndex" (change)="onSelect($event)">
+    <option *ngFor="let e of entries; let i = index" [value]="i">
+      {{ e.titel }}
+    </option>
+  </select>
+
+  <app-blog-entry
+    [titel]="entry.titel"
+    [image]="entry.image"
+    [text]="entry.text ?? ''">
+  </app-blog-entry>
+
+  <div class="button-row">
+    <button (click)="toggleForm()" class="btn-add">
+      {{ showForm ? 'Formular schließen' : 'Neuen Eintrag erstellen' }}
+    </button>
+    <button *ngIf="!showForm" (click)="eintragBearbeiten()" class="btn-edit">
+      Eintrag bearbeiten
+    </button>
+    <button *ngIf="!showForm"(click)="eintragLoeschen()" class="btn-delete">
+      Eintrag löschen
+    </button>
+  </div>
+
+  <app-blog-form
+  *ngIf="showForm"
+  [entries]="entries"
+  [editEntry]="editModus ? entry : null"
+  (eintragErstellt)="onEintragErstellt($event)">
+  </app-blog-form>
+
+</div>
