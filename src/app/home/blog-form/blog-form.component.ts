@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter, Input, OnChanges} from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Entry } from '../blog-list/blog-list.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { Entry } from '../blog-list/blog-list.component';
   templateUrl: './blog-form.component.html',
   styleUrls: ['./blog-form.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class BlogFormComponent implements OnChanges {
 
@@ -16,77 +16,70 @@ export class BlogFormComponent implements OnChanges {
   @Input() entries: Entry[] = [];
   @Output() eintragErstellt = new EventEmitter<Entry>();
 
-  titel: string = '';
-  image: string = '';
-  text: string = '';
-  titelLeerFehler: boolean = false;    
-  titelDoppeltFehler: boolean = false; 
-  imageFehler: boolean = false;
-  imageAdresseUngueltig: boolean = false;
-
-  private istGueltigeUrl(url: string): boolean {
-    const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/i;
-    return urlRegex.test(url);
-  }
+  myForm: FormGroup = new FormGroup({
+    titel: new FormControl('', [
+      Validators.required,
+      this.titelDoppeltValidator.bind(this)
+    ]),
+    image: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^(https?:\/\/)[^\s/$.?#].[^\s]*$/i)
+    ]),
+    text: new FormControl('')
+  });
 
   ngOnChanges(): void {
     if (this.editEntry) {
-      this.titel = this.editEntry.titel;
-      this.image = this.editEntry.image;
-      this.text = this.editEntry.text ?? '';
+      this.myForm.setValue({
+        titel: this.editEntry.titel,
+        image: this.editEntry.image,
+        text: this.editEntry.text ?? ''
+      });
     } else {
-      this.titel = '';
-      this.image = '';
-      this.text = '';
+      this.myForm.reset();
     }
   }
 
   onSubmit() {
-    this.titelLeerFehler = false;
-    this.titelDoppeltFehler = false;
-    this.imageFehler = false;
-    this.imageAdresseUngueltig = false;
-  
-    const titelExistiert = this.entries.some(entry =>
-      entry.titel.trim().toLowerCase() === this.titel.trim().toLowerCase()
-    );
-    
-    if (!this.titel.trim()) {
-      this.titelLeerFehler = true;
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
       return;
     }
 
-    if (!this.image.trim()) {
-      this.imageFehler = true;
-      return;
-    }
+    const bestaetigung = confirm(`Möchten Sie diesen Eintrag ${this.editEntry ? 'aktualisieren' : 'erstellen'}?`);
+    if (!bestaetigung) return;
 
-    if (!this.istGueltigeUrl(this.image.trim())) {
-      this.imageAdresseUngueltig = true;
-      return;
-    }
+    const neuerEintrag: Entry = {
+      titel: this.myForm.value.titel,
+      image: this.myForm.value.image,
+      text: this.myForm.value.text?.trim() || undefined
+    };
 
-    if (titelExistiert && (!this.editEntry || this.editEntry.titel !== this.titel.trim())) {
-      this.titelDoppeltFehler = true;
-      return;
-    }
-  
-    if (this.titel.trim() && this.image.trim()) {
-      const aktion = this.editEntry ? 'aktualisieren' : 'erstellen';
-      const bestaetigung = confirm(`Möchten Sie diesen Eintrag ${aktion}?`);
-      if (!bestaetigung) return;
-  
-      const neuerEintrag: Entry = {
-        titel: this.titel,
-        image: this.image,
-        text: this.text.trim() || undefined
-      };
-  
-      this.eintragErstellt.emit(neuerEintrag);
-  
-      this.titel = '';
-      this.image = '';
-      this.text = '';
-    }
+    this.eintragErstellt.emit(neuerEintrag);
+    this.myForm.reset();
   }
+  
+  hasError(controlName: string, errorCode: string): boolean {
+    const control = this.myForm.get(controlName);
+    return !!(control && control.hasError(errorCode) && control.touched);
+  }
+
+  normalisiereTitel(text: string | null | undefined ): string {
+    return text ? text.trim().toLowerCase() : '';
+  }
+  
+  titelDoppeltValidator(control: AbstractControl): ValidationErrors | null {
+    const eingabe = this.normalisiereTitel(control.value);
+  
+    const existiert = this.entries!.some((e: Entry) =>
+      this.normalisiereTitel(e.titel) === eingabe
+    );
+  
+    if (this.editEntry && this.normalisiereTitel(this.editEntry.titel) === eingabe) {
+      return null;
+    }
+    return existiert ? { doppelt: true } : null;
+  }
+
+
 }

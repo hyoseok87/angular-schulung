@@ -1,243 +1,282 @@
+/* Global Colors */
+:root {
+  --primary-color: #17a2b8;
+  --primary-hover: #138496;
+  --accent-color: #ff8b07;
+  --accent-color-hover: #d27204;
+  --secondary-color: #495057;
+  --text-color: #343a40;
+  --background-color: #F5F5F5;
+}
 
-.main-container {
-    max-width: 960px; 
-    margin-left: auto;  /* Zentriert den Container horizontal */
-    margin-right: auto; /* Zentriert den Container horizontal */
-  }
+.main-container, 
+.blog-formular, 
+.contact-formular {
+  max-width: 1200px; 
+  margin: 0 auto;  
+  padding: 0 20px;
+}
 
-  /* Globale Stile */
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 25px;
-    background-color: #F5F5F5; 
-    color: #343a40; 
-    line-height: 1.6;
-  }
+/* Navigation */
+.nav-bar a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-weight: bold;
+  gap: 20px;
+  padding: 10px;
 
-  /* Allgemeine Überschriften  */
-  h1, h2 {
-      color: #17a2b8; 
-      margin-top: 1.5em;
-      margin-bottom: 0.8em;
-  }
+}
 
-  h1 {
-      border-bottom: 2px solid #dee2e6; 
-      padding-bottom: 0.3em;
-  }
+.active-link {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
 
-  hr {
-      border: 0;
-      height: 1px;
-      background-color: #ced4da; 
-      margin: 40px 0;
-  }
+/* Globale Stile */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 25px;
+  background-color: var(--background-color); 
+  color: var(--text-color); 
+  line-height: 1.6;
+  max-width: 100%;
+}
 
-  /* Stile für app-blog-list */
-  app-blog-list h2 {
-      color: #17a2b8;
-      border-bottom: 2px solid #17a2b8; 
-      padding-bottom: 5px;
-  }
+/* Allgemeine Überschriften */
+h1, h2 {
+  color: var(--primary-color);
+  margin-top: 1.5em;
+  margin-bottom: 0.8em;
+}
 
-  /* Dropdown für Auswahl in app-blog-list */
+h1 {
+  border-bottom: 2px solid #dee2e6; 
+  padding-bottom: 0.3em;
+}
+
+/* Horizontal Rule */
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #ced4da; 
+  margin: 40px 0;
+}
+
+/* app-blog-list styles */
+app-blog-list h2 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color); 
+  padding-bottom: 5px;
+}
+
+/* Dropdown for app-blog-list */
 .blog-liste label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #495057;
+  color: var(--secondary-color);
 }
 
 .blog-liste select {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #17a2b8;
+  border: 1px solid var(--primary-color);
   border-radius: 4px;
   font-size: 1em;
   background-color: #ffffff;
-  color: #343a40;
+  color: var(--text-color);
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .blog-liste select:focus {
-  border-color: #17a2b8;
+  border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(23, 163, 184, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
 }
 
 .blog-liste option {
   padding: 10px;
   background-color: #fff;
-  color: #343a40;
+  color: var(--text-color);
 }
 
+/* app-blog-entry styles */
+.blog-entry {
+  background-color: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: flex-start;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
 
-  /* Stile für app-blog-entry */
-  .blog-entry {
-    background-color: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: flex-start;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    overflow: hidden;
-  }
+.blog-entry img {
+  max-width: 100%; 
+  border-radius: 4px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
 
-  .blog-entry img {
-    max-width: 100%; 
-    border-radius: 4px;
-    margin-right: 12px;
-    flex-shrink: 0;
-  }
+.blog-entry .inhalt {
+  flex-grow: 1;
+}
 
-  .blog-entry .inhalt {
-      flex-grow: 1;
-  }
+.blog-entry .titel {
+  font-weight: 600;
+  font-size: 1.3em;
+  color: #5D5D5D; 
+  display: block;
+  margin-bottom: 6px;
+}
 
-  .blog-entry .titel {
-    font-weight: 600;
-    font-size: 1.3em;
-    color: #5D5D5D; 
-    display: block;
-    margin-bottom: 6px;
-  }
+.blog-entry .text {
+  font-size: 0.95em;
+  color: var(--secondary-color); 
+  line-height: 1.5;
+}
 
-  .blog-entry .text {
-      font-size: 0.95em;
-      color: #495057; 
-      line-height: 1.5;
-  }
+/* app-blog-form styles */
+.blog-formular {
+  border: 3px solid var(--primary-color);   
+  border-radius: 8px;
+  padding: 25px;
+  margin-top: 30px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
 
-  /* Stile für app-blog-form */
-  .blog-formular {
-   
-    border: 3px solid #17a2b8;   
-    border-radius: 8px;
-    padding: 25px;
-    margin-top: 30px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  }
+.blog-formular h2 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color); 
+  padding-bottom: 8px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
 
+.blog-formular div {
+  margin-bottom: 18px;
+}
 
-  .blog-formular h2 {
-    color: #17a2b8;
-    border-bottom: 2px solid #17a2b8; 
-    padding-bottom: 8px;
-    margin-top: 0;
-    margin-bottom: 20px;
-  }
+.blog-formular label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--secondary-color);
+}
 
-  .blog-formular div {
-    margin-bottom: 18px;
-  }
+.blog-formular input[type="text"],
+.blog-formular textarea {
+  width: calc(100% - 24px);
+  padding: 10px 12px;
+  border: 1px solid var(--primary-color); 
+  border-radius: 4px;
+  font-size: 1em;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
 
-  .blog-formular label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #495057; 
-  }
+.blog-formular input[type="text"]:focus,
+.blog-formular textarea:focus {
+  border-color: var(--primary-color); 
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
 
-  .blog-formular input[type="text"],
-  .blog-formular textarea {
-    width: calc(100% - 24px);
-    padding: 10px 12px;
-    border: 1px solid #17a2b8; 
-    border-radius: 4px;
-    font-size: 1em;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  }
+.blog-formular textarea {
+  resize: vertical;
+  min-height: 80px;
+}
 
-  .blog-formular input[type="text"]:focus,
-  .blog-formular textarea:focus {
-      border-color: rgb(23, 162, 184); 
-      outline: 0;
-      box-shadow: 0 0 0 0.2rem rgba(23, 163, 184, 0.25);
-  }
+.input-error {
+  border: 1px solid red;
+}
 
-  .blog-formular textarea {
-      resize: vertical;
-      min-height: 80px;
-  }
+.fehlermeldung {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 4px;
+}
 
-  .input-error {
-    border: 1px solid red;
-  }
-  
-  .fehlermeldung {
-    color: red;
-    font-size: 0.85em;
-    margin-top: 4px;
-  }
+.blog-formular button {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.05em;
+  transition: background-color 0.2s ease;
+}
 
-  .blog-formular button {
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.05em;
-    transition: background-color 0.2s ease;
-  }
+/* Button variants */
+.blog-formular .btn-save {
+  background-color: var(--primary-color);
+}
+.blog-formular .btn-save:hover {
+  background-color: var(--primary-hover);
+}
+.btn-disabled {
+  background-color: #6c757d;
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.blog-formular .btn-update {
+  background-color: var(--accent-color);
+}
+.blog-formular .btn-update:hover {
+  background-color: var(--accent-color-hover); 
+}
 
-  .blog-formular .btn-save {
-    background-color: #17a2b8;
-  }
-  .blog-formular .btn-save:hover {
-    background-color: #138496;
-  }
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
 
+.btn-add,
+.btn-delete,
+.btn-edit {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .blog-formular .btn-update {
-    background-color: #ff8b07; 
-    color: white;
-  }
-  .blog-formular .btn-update:hover {
-    background-color: #e0a800;
-  }
+.btn-add {
+  background-color: var(--primary-color);
+  color: white;
+}
 
-  .button-row {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
-  }
-  
-  .btn-add,
-  .btn-delete,
-  .btn-edit {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn-add {
-    background-color: #17a2b8;
-    color: white;
-  }
-  
-  .btn-add:hover {
-    background-color: #138496;
-  }
+.btn-add:hover {
+  background-color: var(--primary-hover);
+}
 
-  .btn-edit {
-    background-color: #ff8b07;
-    color: white;
-  }
+.btn-edit {
+  background-color: var(--accent-color);
+  color: white;
+}
 
-  .btn-edit:hover {
-    background-color: #e0a800;
-  }
+.btn-edit:hover {
+  background-color: var(--accent-color-hover);
+}
 
-  .btn-delete {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .btn-delete:hover {
-    background-color: #c82333;
-  }
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  z-index: 100;
+}

@@ -2,8 +2,8 @@
   <h2>Blog-List</h2>
 
   <label for="entrySelect">Blog-Eintrag auswählen:</label>
-  <select id="entrySelect" [(ngModel)]="selectedIndex" (change)="onSelect($event)">
-    <option *ngFor="let e of entries; let i = index" [value]="i">
+  <select id="entrySelect" [(ngModel)]="selectedTitel" (change)="onSelect($event)">
+    <option *ngFor="let e of sortedEntries" [value]="e.titel">
       {{ e.titel }}
     </option>
   </select>

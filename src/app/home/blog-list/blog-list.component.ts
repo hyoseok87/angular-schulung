@@ -1,12 +1,14 @@
+import { DataService } from './../data.service';
 import { BlogFormComponent } from './../blog-form/blog-form.component';
 import { Component } from '@angular/core';
 import { BlogEntryComponent } from "./blog-entry/blog-entry.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+
 export interface Entry {
-  image: string;
   titel: string;
+  image: string;
   text?: string;
 }
 
@@ -20,11 +22,37 @@ export interface Entry {
 export class BlogListComponent  {
 
   entries: Entry[] = [];
-  entry!: Entry;
   editEntry: Entry | null = null;
   selectedIndex: number = 0;
   showForm: boolean = false;
   editModus: boolean = false;
+
+  private _selectedTitel: string = '';
+  
+  get selectedTitel(): string {
+    return this._selectedTitel;
+  }
+
+  set selectedTitel(titel: string) {
+    this._selectedTitel = titel;
+    const index = this.entries.findIndex(e => e.titel === titel);
+    if (index !== -1) {
+      this.selectedIndex = index;
+    }
+  }
+
+  get entry(): Entry {
+    return this.entries[this.selectedIndex];
+  }
+
+  get sortedEntries(): Entry[] {
+    return [...this.entries].sort((a, b) =>
+      a.titel.localeCompare(b.titel)
+    );
+  }
+
+  constructor(private dataService: DataService){}
+
 
   toggleForm() {
     this.showForm = !this.showForm;
@@ -35,20 +63,16 @@ export class BlogListComponent  {
   }
 
   ngOnInit(): void {
-    const gespeicherteEintraege = localStorage.getItem('blogEintraege');
-    this.entries = gespeicherteEintraege ? JSON.parse(gespeicherteEintraege) : [];
-  
+    this.entries = this.dataService.loadEntries();
     if (this.entries.length > 0) {
-      this.entry = this.entries[this.selectedIndex];
+      this.selectedTitel = this.sortedEntries[0].titel;
     } else {
-      this.entry = { titel: '', image: '', text: '' };
+      this.selectedTitel = '';
     }
   }
   onSelect(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    const index = parseInt(selectElement.value, 10);
-    this.entry = this.entries[index];
-    this.selectedIndex = index;
+    this.selectedTitel = selectElement.value;
   }
   
   onEintragErstellt(neuerEintrag: Entry) {
@@ -58,9 +82,9 @@ export class BlogListComponent  {
       this.entries.push(neuerEintrag);
       this.selectedIndex = this.entries.length - 1;
     }
-  
-    this.entry = this.entries[this.selectedIndex];
-    localStorage.setItem('blogEintraege', JSON.stringify(this.entries));
+
+    this.selectedTitel = neuerEintrag.titel;
+    this.dataService.saveEntries(this.entries);
     this.showForm = false;
     this.editModus = false;
     this.editEntry = null;
@@ -74,17 +98,16 @@ export class BlogListComponent  {
 
   eintragLoeschen() {
     if (this.entries.length === 0) return;
-    const bestaetigungdesLöschen = confirm ('Möchten Sie diesen Eintrag wirklich löschen?')
+    const bestaetigungdesLöschen = confirm('Möchten Sie diesen Eintrag wirklich löschen?');
     if (!bestaetigungdesLöschen) return;
 
     this.entries.splice(this.selectedIndex, 1);
     if (this.entries.length > 0) {
-      this.selectedIndex = 0;
-      this.entry = this.entries[0];
+      this.selectedTitel = this.sortedEntries[0].titel;
     } else {
       this.selectedIndex = 0;
-      this.entry = { titel: '', image: '', text: '' };
+      this.selectedTitel = '';
     }
-    localStorage.setItem('blogEintraege', JSON.stringify(this.entries));
+    this.dataService.saveEntries(this.entries);
   }
 }

@@ -3,22 +3,22 @@
     {{ editEntry ? (editEntry.titel + ' bearbeiten') : 'Neuen Eintrag erstellen' }}
   </h2>
 
-  <form (ngSubmit)="onSubmit()">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
 
     <div>
       <label for="titel">Titel<span class="required">*</span></label><br />
       <input
         type="text"
         id="titel"
-        name="titel"
-        [(ngModel)]="titel"
-        [ngClass]="{ 'input-error': titelLeerFehler || titelDoppeltFehler }"
+        formControlName="titel"
+        [ngClass]="{ 'input-error': myForm.get('titel')?.invalid && myForm.get('titel')?.touched }"
         placeholder="Titel"
       />
-      <div *ngIf="titelLeerFehler" class="fehlermeldung">
-        Bitte geben Sie einen Titel ein.
+      <div *ngIf="hasError('titel', 'required')" class="fehlermeldung">
+        Titel ist erforderlich.
       </div>
-      <div *ngIf="titelDoppeltFehler" class="fehlermeldung">
+      
+      <div *ngIf="hasError('titel', 'doppelt')" class="fehlermeldung">
         Ein Eintrag mit diesem Titel existiert bereits.
       </div>
     </div>
@@ -28,28 +28,35 @@
       <input
         type="text"
         id="bildUrl"
-        name="bildUrl"
-        [(ngModel)]="image"
-        [ngClass]="{ 'input-error': imageFehler }"
+        formControlName="image"
+        [ngClass]="{ 'input-error': myForm.get('image')?.invalid && myForm.get('image')?.touched }"
         placeholder="URL"
       />
-      <div *ngIf="imageFehler" class="fehlermeldung">
+      <div *ngIf="hasError('image', 'required')" class="fehlermeldung">
         Bild-URL ist erforderlich.
       </div>
-      <div *ngIf="imageAdresseUngueltig" class="fehlermeldung">
+      <div *ngIf="hasError('image', 'pattern')" class="fehlermeldung">
         Bitte geben Sie eine gültige Webadresse ein (z.B. https://beispiel.de).
       </div>
     </div>
 
     <div>
       <label for="text">Text:</label><br />
-      <textarea id="text" name="text" rows="4" [(ngModel)]="text"></textarea>
+      <textarea id="text" rows="4" maxlength="200" formControlName="text"></textarea>
     </div>
     
-    <button type="submit" [ngClass]="{ 'btn-update': editEntry, 'btn-save': !editEntry }">
+    <button
+      type="submit"
+      [disabled]="myForm.invalid"
+      [ngClass]="{
+        'btn-update': editEntry,
+        'btn-save': !editEntry,
+        'btn-disabled': myForm.invalid
+      }"
+    >
       {{ editEntry ? 'Eintrag aktualisieren' : 'Eintrag erstellen' }}
     </button>
 
-    <p>(<span class="required">*</span> Felder sind verpflicht)</p>
+    <p><span class="required">*</span> Pflichtfelder</p>
   </form>
 </div>
