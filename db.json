@@ -1,23 +1,32 @@
 {
-    "entries": [
-        {
-            "titel": "Test1",
-            "image": "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            "text": "test"
-        },
-        {
-            "titel": "Test2",
-            "image": "https://images.unsplash.com/photo-1741851374655-3911c1b0e95a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI5fGJvOGpRS1RhRTBZfHxlbnwwfHx8fHw%3D"
-        },
-        {
-            "titel": "Test",
-            "image": "https://wallpaperaccess.com/full/775698.jpg",
-            "text": "test"
-        },
-        {
-            "titel": "Test4",
-            "image": "https://plus.unsplash.com/premium_photo-1688429242358-4f820b208894?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM1fGJvOGpRS1RhRTBZfHxlbnwwfHx8fHw%3D"
-        }
-    ]
-  }
-
+  "entries": [
+    {
+      "id": "1",
+      "titel": "Test1",
+      "image": "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "text": "test"
+    },
+    {
+      "id": "2",
+      "titel": "Test2",
+      "image": "https://images.unsplash.com/photo-1741851374655-3911c1b0e95a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI5fGJvOGpRS1RhRTBZfHxlbnwwfHx8fHw%3D"
+    },
+    {
+      "id": "3",
+      "titel": "Test",
+      "image": "https://wallpaperaccess.com/full/775698.jpg",
+      "text": "test"
+    },
+    {
+      "id": "4",
+      "titel": "Test4",
+      "image": "https://plus.unsplash.com/premium_photo-1688429242358-4f820b208894?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM1fGJvOGpRS1RhRTBZfHxlbnwwfHx8fHw%3D"
+    },
+    {
+      "titel": "Test5",
+      "image": "https://images.unsplash.com/photo-1744638628542-12578d73179b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8eGpQUjRobGtCR0F8fGVufDB8fHx8fA%3D%3D",
+      "text": "test5 wurde bearbeitet",
+      "id": "421c"
+    }
+  ]
+}
